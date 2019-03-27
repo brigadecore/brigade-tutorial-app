@@ -1,0 +1,4 @@
+replicaCount: 1
+image:
+  tag: latest
+  name: jakubborys/brigade-tutorial-app

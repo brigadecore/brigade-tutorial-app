@@ -1,0 +1,2 @@
+DB_URIS:
+    "products:Base": postgresql://${DB_USER:postgres}:${DB_PASSWORD:password}@${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:products}
