@@ -2,3 +2,5 @@ replicaCount: 1
 image:
   tag: latest
   name: jakubborys/brigade-tutorial-app
+ingressPort: 8888
+servicePort: 8000
