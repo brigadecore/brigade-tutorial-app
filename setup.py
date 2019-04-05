@@ -9,7 +9,7 @@ setup(
         "nameko==3.0.0-rc6",
         "nameko-sqlalchemy==1.5.0",
         "alembic==1.0.8",
-        "psycopg2-binary==2.7.7",
+        "psycopg2==2.8",
     ],
     extras_require={"dev": ["pytest==4.3.1", "coverage==4.5.3", "flake8==3.7.7"]},
     zip_safe=True,

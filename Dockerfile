@@ -16,7 +16,7 @@ FROM base AS wheels
 
 RUN apt-get update && \
     apt-get install --yes build-essential autoconf libtool pkg-config \
-    libgflags-dev libgtest-dev clang libc++-dev automake git
+    libgflags-dev libgtest-dev clang libc++-dev automake git libpq-dev
 
 RUN . /appenv/bin/activate; \
     pip install auditwheel
