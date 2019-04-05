@@ -1,0 +1,21 @@
+{
+  "name": "brigade-tutorial-app",
+  "version": "1.0.0",
+  "description": "Brigade Tutorial",
+  "main": "brigade.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kooba/brigade-tutorial-app.git"
+  },
+  "author": "Jakub Borys",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kooba/brigade-tutorial-app/issues"
+  },
+  "homepage": "https://github.com/kooba/brigade-tutorial-app#readme",
+  "dependencies": {
+    "@brigadecore/brigadier": "^0.4.0",
+    "@kubernetes/client-node": "^0.8.2"
+  }
+}
