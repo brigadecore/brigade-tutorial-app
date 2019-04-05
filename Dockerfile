@@ -37,7 +37,7 @@ FROM base AS install
 COPY --from=wheels /application/wheelhouse /wheelhouse
 
 RUN . /appenv/bin/activate && \
-    pip install --no-index -f /wheelhouse brigade_tutorial_orders
+    pip install --no-index -f /wheelhouse brigade_tutorial_products
 
 # ------------------------------------------------------------------------
 
