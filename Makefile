@@ -1,4 +1,5 @@
 TAG ?= $(shell git rev-parse HEAD)
+REF ?= $(shell git branch | grep \* | cut -d ' ' -f2)
 DOCKER_HUB_ORG ?= jakubborys
 CONTEXT ?= docker-for-desktop
 ENV_NAME ?= bob
@@ -28,5 +29,5 @@ deploy:
 
 run-brigade:
 	echo '{"name": "$(ENV_NAME)"}' > payload.json
-	brig run -c $(TAG) -r $(REF) -f brigade.js -p payload.json \
-	kooba/ditc-products --kube-context $(CONTEXT) --namespace brigade
+	brig run kooba/brigade-tutorial-app -c $(TAG) -r $(REF) -f brigade.js \
+	-p payload.json --kube-context $(CONTEXT) --namespace brigade
