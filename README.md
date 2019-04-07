@@ -3,5 +3,5 @@
 # Example Requests
 
 ```sh
-$ curl -XPOST localhost:8000/products/ -d '{"name": "The Oddysay"}'
+$ curl -XPOST localhost:8000/products/ -d '{"name": "The Odyssey"}'
 ```
