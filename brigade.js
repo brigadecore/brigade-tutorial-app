@@ -8,15 +8,11 @@ const k8sClient = kubernetes.Config.defaultClient();
 
 const BRIGADE_NAMESPACE = "brigade";
 const PROJECT_NAME = "products";
-const GITHUB_API_URL =
-  "https://api.github.com/repos/kooba/brigade-tutorial-app";
+const GITHUB_API_URL = "https://api.github.com/repos/kooba/brigade-tutorial-app";
 
 const deploy = async (environmentName, gitSha) => {
   console.log("deploying helm charts");
-  const service = new Job(
-    "brigade-tutorial-app",
-    "lachlanevenson/k8s-helm:v2.12.3"
-  );
+  const service = new Job("brigade-tutorial-app", "lachlanevenson/k8s-helm:v2.12.3");
   service.storage.enabled = false;
   service.imageForcePull = true;
   service.tasks = [
@@ -25,7 +21,7 @@ const deploy = async (environmentName, gitSha) => {
     charts/products --install \
     --namespace=${environmentName} \
     --set image.tag=${gitSha} \
-    --set replicaCount=1`
+    --set replicaCount=1`,
   ];
   await service.run();
 };
@@ -41,8 +37,8 @@ const getTagCommit = async tag => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `token ${process.env.BRIGADE_REPO_AUTH_TOKEN}`
-    }
+      Authorization: `token ${process.env.BRIGADE_REPO_AUTH_TOKEN}`,
+    },
   });
   if (response.ok) {
     const commit = await response.json();
@@ -59,14 +55,14 @@ const deployToEnvironments = async payload => {
     undefined,
     undefined,
     undefined,
-    "type=preview-environment-config"
+    "type=preview-environment-config",
   );
   if (!environmentConfigMaps.body.items.length) {
     throw Error("No environment configMaps found");
   }
   for (const configMap of environmentConfigMaps.body.items) {
-    const environmentsConfig = yaml.safeLoad(configMap.data.environment);
-    const config = environmentsConfig[PROJECT_NAME];
+    const projects = yaml.safeLoad(configMap.data.projects);
+    const config = projects[PROJECT_NAME];
     if (config && config.tag === tag) {
       const { environmentName } = configMap.metadata.labels;
       const gitSha = await getTagCommit(tag);
