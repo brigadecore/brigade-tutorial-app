@@ -54,7 +54,7 @@ COPY --from=install /appenv /appenv
 
 COPY config.yaml /var/nameko/config.yaml
 COPY alembic.ini /var/nameko/alembic.ini
-ADD alembic /var/nameko/alembic
+ADD migrations /var/nameko/migrations
 
 RUN groupadd -r nameko && useradd -r -g nameko nameko
 
