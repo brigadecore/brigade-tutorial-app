@@ -10,8 +10,7 @@ const k8sClient = kubernetes.Config.defaultClient();
 
 const BRIGADE_NAMESPACE = "brigade";
 const PROJECT_NAME = "products";
-const GITHUB_API_URL =
-  "https://api.github.com/repos/kooba/brigade-tutorial-app";
+const GITHUB_API_URL = "https://api.github.com/repos";
 
 const deploy = async (environmentName, gitSha) => {
   console.log("deploying helm charts");
@@ -36,9 +35,9 @@ const provisionEnvironment = async environmentName => {
   await deploy(environmentName, process.env.BRIGADE_COMMIT_ID);
 };
 
-const getTagCommit = async tag => {
+const getTagCommit = async (tag, org, repo) => {
   console.log(`getting commit sha for tag ${tag}`);
-  const tagUrl = `${GITHUB_API_URL}/git/refs/tags/${tag}`;
+  const tagUrl = `${GITHUB_API_URL}/${org}/${repo}/git/refs/tags/${tag}`;
   const response = await fetch(tagUrl, {
     method: "GET",
     headers: {
@@ -71,7 +70,7 @@ const deployToEnvironments = async payload => {
     const config = projects[PROJECT_NAME];
     if (config && config.tag === tag) {
       const { environmentName } = configMap.metadata.labels;
-      const gitSha = await getTagCommit(tag);
+      const gitSha = await getTagCommit(tag, config.org, config.repo);
       await deploy(environmentName, gitSha);
     }
   }
