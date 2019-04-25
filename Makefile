@@ -38,7 +38,7 @@ run-brigade:
 
 retag:
 	curl -XDELETE -H "Authorization: token $(GITHUB_TOKEN)" \
-	"https://api.github.com/repos/$(GIT_REPO)/git/refs/tags/dev"
+	"https://api.github.com/repos/$(GIT_REPO)/git/refs/tags/prod"
 	curl -XPOST -H "Authorization: token $(GITHUB_TOKEN)" \
 	"https://api.github.com/repos/$(GIT_REPO)/git/refs" \
 	-d '{ "sha": "$(TAG)", "ref": "refs/tags/prod" }'
