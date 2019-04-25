@@ -8,11 +8,15 @@ const k8sClient = kubernetes.Config.defaultClient();
 
 const BRIGADE_NAMESPACE = "brigade";
 const PROJECT_NAME = "products";
-const GITHUB_API_URL = "https://api.github.com/repos/kooba/brigade-tutorial-app";
+const GITHUB_API_URL =
+  "https://api.github.com/repos/kooba/brigade-tutorial-app";
 
 const deploy = async (environmentName, gitSha) => {
   console.log("deploying helm charts");
-  const service = new Job("brigade-tutorial-app", "lachlanevenson/k8s-helm:v2.12.3");
+  const service = new Job(
+    "brigade-tutorial-app",
+    "lachlanevenson/k8s-helm:v2.12.3",
+  );
   service.storage.enabled = false;
   service.imageForcePull = true;
   service.tasks = [
@@ -101,12 +105,12 @@ events.on("exec", e => {
   }
 });
 
-events.on("create", e => {
+events.on("create", event => {
   /**
    * Events triggered by GitHub webhook on tag creation will trigger this handler.
    */
   try {
-    const payload = JSON.parse(e.payload);
+    const payload = JSON.parse(event.payload);
     if (payload.ref_type !== "tag") {
       console.log("skipping, not a tag commit");
       return;
