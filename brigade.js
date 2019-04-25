@@ -4,6 +4,8 @@ const process = require("process");
 const yaml = require("js-yaml");
 const fetch = require("node-fetch");
 
+console.log(process.env);
+
 const k8sClient = kubernetes.Config.defaultClient();
 
 const BRIGADE_NAMESPACE = "brigade";
