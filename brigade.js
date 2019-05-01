@@ -10,8 +10,6 @@ const BRIGADE_NAMESPACE = "brigade";
 const PROJECT_NAME = "products";
 const GITHUB_API_URL = "https://api.github.com/repos";
 
-console.log(process.env);
-
 const deploy = async (environmentName, gitSha) => {
   console.log("deploying helm charts");
   const service = new Job(
@@ -106,10 +104,11 @@ events.on("exec", e => {
   }
 });
 
-events.on("create", event => {
+events.on("create", (event, project) => {
   /**
    * Events triggered by GitHub webhook on tag creation will trigger this handler.
    */
+  console.log(project);
   try {
     const payload = JSON.parse(event.payload);
     if (payload.ref_type !== "tag") {
