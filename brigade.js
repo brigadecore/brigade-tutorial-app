@@ -4,13 +4,13 @@ const process = require("process");
 const yaml = require("js-yaml");
 const fetch = require("node-fetch");
 
-console.log(process.env);
-
 const k8sClient = kubernetes.Config.defaultClient();
 
 const BRIGADE_NAMESPACE = "brigade";
 const PROJECT_NAME = "products";
 const GITHUB_API_URL = "https://api.github.com/repos";
+
+console.log(process.env);
 
 const deploy = async (environmentName, gitSha) => {
   console.log("deploying helm charts");
