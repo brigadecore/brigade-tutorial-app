@@ -33,9 +33,9 @@ const provisionEnvironment = async environmentName => {
   await deploy(environmentName, process.env.BRIGADE_COMMIT_ID);
 };
 
-const getTagCommit = async (tag, org, repo) => {
+const getTagCommit = async (tag, repository) => {
   console.log(`getting commit sha for tag ${tag}`);
-  const tagUrl = `${GITHUB_API_URL}/${org}/${repo}/git/refs/tags/${tag}`;
+  const tagUrl = `${GITHUB_API_URL}/${repository}/git/refs/tags/${tag}`;
   const response = await fetch(tagUrl, {
     method: "GET",
     headers: {
@@ -50,7 +50,7 @@ const getTagCommit = async (tag, org, repo) => {
   throw Error(await response.text());
 };
 
-const deployToEnvironments = async payload => {
+const deployToEnvironments = async (payload, repository) => {
   const tag = payload.ref;
   const environmentConfigMaps = await k8sClient.listNamespacedConfigMap(
     BRIGADE_NAMESPACE,
@@ -63,12 +63,14 @@ const deployToEnvironments = async payload => {
   if (!environmentConfigMaps.body.items.length) {
     throw Error("No environment configMaps found");
   }
+
+  const gitSha = await getTagCommit(tag, repository);
+
   for (const configMap of environmentConfigMaps.body.items) {
     const projects = yaml.safeLoad(configMap.data.projects);
     const config = projects[PROJECT_NAME];
     if (config && config.tag === tag) {
       const { environmentName } = configMap.metadata.labels;
-      const gitSha = await getTagCommit(tag, config.org, config.repo);
       await deploy(environmentName, gitSha);
     }
   }
@@ -108,14 +110,13 @@ events.on("create", (event, project) => {
   /**
    * Events triggered by GitHub webhook on tag creation will trigger this handler.
    */
-  console.log(project);
   try {
     const payload = JSON.parse(event.payload);
     if (payload.ref_type !== "tag") {
       console.log("skipping, not a tag commit");
       return;
     }
-    deployToEnvironments(payload).catch(error => {
+    deployToEnvironments(payload, project.repo.name).catch(error => {
       logError(error);
     });
   } catch (error) {
