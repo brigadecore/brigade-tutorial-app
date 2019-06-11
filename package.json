@@ -6,14 +6,14 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kooba/brigade-tutorial-app.git"
+    "url": "git+https://github.com/brigadecore/brigade-tutorial-app.git"
   },
   "author": "Jakub Borys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kooba/brigade-tutorial-app/issues"
+    "url": "https://github.com/brigadecore/brigade-tutorial-app/issues"
   },
-  "homepage": "https://github.com/kooba/brigade-tutorial-app#readme",
+  "homepage": "https://github.com/brigadecore/brigade-tutorial-app#readme",
   "dependencies": {
     "@brigadecore/brigadier": "^0.4.0",
     "@kubernetes/client-node": "^0.8.2"
