@@ -1,10 +1,10 @@
 TAG ?= $(shell git rev-parse HEAD)
 REF ?= $(shell git branch | grep \* | cut -d ' ' -f2)
-DOCKER_HUB_ORG ?= jakubborys
+DOCKER_HUB_ORG ?= brigadecore
 CONTEXT ?= docker-for-desktop
 ENV_NAME ?= bob
 
-GIT_REPO = kooba/brigade-tutorial-app
+GIT_REPO = brigadecore/brigade-tutorial-app
 # Set GitHub Auth Token here
 GITHUB_TOKEN ?= ""
 
@@ -33,7 +33,7 @@ deploy:
 
 run-brigade:
 	echo '{"name": "$(ENV_NAME)"}' > payload.json
-	brig run kooba/brigade-tutorial-app -c $(TAG) -r $(REF) -f brigade.js \
+	brig run brigadecore/brigade-tutorial-app -c $(TAG) -r $(REF) -f brigade.js \
 	-p payload.json --kube-context $(CONTEXT) --namespace brigade
 
 retag:
