@@ -6,7 +6,7 @@ setup(
     description="Store and serve products",
     packages=find_packages(exclude=["test", "test.*"]),
     install_requires=[
-        "nameko==3.0.0-rc6",
+        "nameko==3.0.0rc10",
         "nameko-sqlalchemy==1.5.0",
         "alembic==1.0.8",
         "psycopg2==2.8",
